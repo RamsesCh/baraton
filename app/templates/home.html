@@ -1,0 +1,120 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-body px-4">
+                                <button ng-click="allproducts()" type="button" class="btn btn btn-info btn-block text-center btn-sm mb-3">Todas
+                                    las categorias</button>
+                                <ul style="list-style-type: none; padding: 0px; margin: 0px;">
+                                    <li ng-repeat="cat in listCategories">
+                                        <h6 class="text-info">{{cat.name}}</h6>
+                                        <ul style="list-style-type: none; padding: 0px;">
+                                            <li ng-repeat="sub in cat.sublevels">
+                                                <button ng-click="filterSublevel(sub.id, sub.name)" type="button" class="btn btn-light btn-block text-left px-3 btn-sm">{{sub.name}}</button>
+                                                <ul style="list-style-type: none; padding: 0px;">
+                                                    <li ng-repeat="sub2 in sub.sublevels">
+                                                        <button ng-click="filterSublevel(sub2.id, sub2.name)" type="button" class="btn btn-light btn-block text-left px-5 btn-sm">{{sub2.name}}</button></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio3" ng-model="filtDisp" value="" name="customRadio"
+                                    class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio3">Todos</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio1" ng-model="filtDisp" value="true" name="customRadio"
+                                    class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio1">Disponible</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio2" ng-model="filtDisp" value="false" name="customRadio"
+                                    class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio2">No disponible</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-5">
+                                    <input type="text" ng-model="limitinf" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                        placeholder="minimo">
+                                </div>
+                                <div class="col-2 text-center">
+                                    <h5>--</h5>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" ng-model="limitsup" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2"
+                                        placeholder="máximo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9">
+            <div class="row">
+                <div class="col-md-5 mt-3">
+                    <p><span class="text-secondary">Filtrando por: {{filterName}}</span></p>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-search"></i></div>
+                        </div>
+                        <input ng-model="searchInput" type="text" class="form-control" id="inlineFormInputGroup"
+                            placeholder="Buscar">
+                    </div>
+                </div>
+                <div class="col-md-3 text-right mt-3">
+                    <select class="form-control form-control-sm" ng-model="tipoOrden">
+                        <option value="">Ordenar por</option>
+                        <option value="name">Nombre (A -Z)</option>
+                        <option value="-name">Nombre (Z - A)</option>
+                        <option value="price">Precio (Menor - Mayor)</option>
+                        <option value="-price">Precio (Mayor - Menor)</option>
+                        <option value="quantity">Stock (Menor - Mayor)</option>
+                        <option value="-quantity">Stock (Mayor - Menor)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3" ng-repeat="product in listProducts | filter:{sublevel_id:filterSb}:true | filter:{available:filtDisp} | filter: betwThan('price', limitinf,limitsup) | filter:searchInput | orderBy:tipoOrden">
+                    <div class="card shadow mt-2">
+                        <img src="assets/img/product-image.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-info text-capitalize">{{product.name}}</h5>
+                            <p class="card-text btn-block">Precio: {{product.price | currency}}</p>
+                            <p class="card-text btn-block">En stock: {{product.quantity}}</p>
+                            <button ng-if="product.available == true" ng-click="addItem(product)" class="btn btn-success btn-block"><i
+                                    class="fas fa-cart-plus"></i> Agregar</button>
+                            <p ng-if="product.available == false" class="card-text btn btn-block text-center text-danger"
+                                style="cursor:default;">No disponible</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

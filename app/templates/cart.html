@@ -1,0 +1,99 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mt-4">
+            <h4 class="pb-1"><i class="fas fa-shopping-cart"></i> Carrito de compra</h4>
+            <div ng-show="cart.length == false" class="jumbotron">
+                <h5>Tu carrito esta vacio.</h5>
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="item in cart">
+                        <th><img style="width:80px;" src="assets/img/product-image.jpg" alt=""></th>
+                        <td>
+                            <p class="text-capitalize">{{item.name}}</p>
+                        </td>
+                        <td>
+                            <p class="text-primary">{{item.price| currency}}</p>
+                        </td>
+                        <td>
+                            <div class="form-row">
+                                <div class="col-1 offset-3">
+                                    <button type="button" class="btn btn-secondary btn-info" ng-click="minus($index)">-</button>
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" class="form-control mb-2 mx-2 text-center" ng-model="item.cant">
+
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-secondary btn-info" ng-click="more($index)">+</button>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td><button ng-click="remove($index)" type="button" class="btn btn-outline-danger">Eliminar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4 pt-3">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Total a pagar: </th>
+                                <th scope="col" class="text-right">{{getTotal() | currency}}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <form name="datEnvio" ng-submit="ordernow(user)" ng-show="getTotal() > 0">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-user"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="user.name" id="inlineFormInputGroup" required placeholder="Nombre">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="user.direcc" required id="inlineFormInputGroup" placeholder="Direccion">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-phone"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="user.phone" required id="inlineFormInputGroup" placeholder="Teléfono">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="user.cp" required id="inlineFormInputGroup" placeholder="Código postal">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="far fa-credit-card"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="user.card" required id="inlineFormInputGroup" placeholder="No. de tarjeta">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-ng-disabled='!datEnvio.$valid' class="btn btn-info btn-block"><i class="far fa-check-circle"></i>
+                            Ordenar ahora.</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
