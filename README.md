@@ -43,6 +43,7 @@ _Listo! La aplicación se encuentra funcionando en: http://localhost:8080_
 ## Construido con 🛠️
 
 * AngularJs
+* Bootstrap v4
 * NodeJs
 * Npm
 * Express
